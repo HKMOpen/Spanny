@@ -1,9 +1,9 @@
 package com.binaryfork.spannysample;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
 import android.text.style.AlignmentSpan;
 import android.text.style.BackgroundColorSpan;
@@ -24,21 +24,24 @@ import android.widget.TextView;
 import com.binaryfork.spanny.Spanny;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Pacifico.ttf");
+        getActionBar().setTitle(Spanny.spanText("Spanny", new CustomTypefaceSpan(typeface)));
         TextView textView = (TextView) findViewById(R.id.textView);
-        Spanny spanny = new Spanny("StyleSpan", new StyleSpan(Typeface.BOLD_ITALIC))
+        Spanny spanny = new Spanny("StyleSpan\n", new StyleSpan(Typeface.BOLD_ITALIC))
+                .append("CustomTypefaceSpan", new CustomTypefaceSpan(typeface))
                 .append("CustomAlignmentSpan", new CustomAlignmentSpan(CustomAlignmentSpan.RIGHT_TOP))
-                .append("\n\nUnderlineSpan, ", new UnderlineSpan())
+                .append("\nUnderlineSpan, ", new UnderlineSpan())
                 .append(" TypefaceSpan, ", new TypefaceSpan("serif"))
                 .append("URLSpan, ", new URLSpan("google.com"))
                 .append("StrikethroughSpan", new StrikethroughSpan())
                 .append("\nQuoteSpan", new QuoteSpan(Color.RED))
-                .appendText("\nPlain text")
+                .append("\nPlain text")
                 .append("SubscriptSpan", new SubscriptSpan())
                 .append("SuperscriptSpan", new SuperscriptSpan())
                 .append("\n\nBackgroundSpan", new BackgroundColorSpan(Color.LTGRAY))
